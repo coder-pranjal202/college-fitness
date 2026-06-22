@@ -39,6 +39,17 @@ export default function Home() {
       const scroll = `${totalScroll / windowHeight}`;
       setScrolled(window.scrollY > 20);
       setScrollProgress(Number(scroll));
+
+      // Scroll reveal animation
+      const reveals = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale');
+      reveals.forEach(element => {
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        if (elementTop < windowHeight - elementVisible) {
+          element.classList.add('revealed');
+        }
+      });
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
