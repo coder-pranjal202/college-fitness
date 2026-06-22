@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { Menu, X, Trophy, Users, Calendar, Shield, Mail, MapPin, Phone, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, Trophy, Users, Calendar, Shield, Mail, MapPin, Phone, ChevronRight, Sparkles, ArrowRight, Zap, Target, Award } from "lucide-react";
 
 const sportsList = [
   { name: "Cricket", emoji: "🏏", desc: "Test matches, T20 tournaments, and friendly games on the campus ground." },
@@ -14,132 +14,244 @@ const sportsList = [
 ];
 
 const features = [
-  { icon: Trophy, title: "Create Events", desc: "Organize sports tournaments and events with just a few clicks." },
-  { icon: Users, title: "Build Teams", desc: "Form teams, invite players, and manage your squad roster." },
-  { icon: Calendar, title: "Register Easily", desc: "Sign up for events in seconds and track your participation." },
-  { icon: Shield, title: "Compete & Win", desc: "Track scores, view leaderboards, and earn recognition." },
+  { icon: Trophy, title: "Create Events", desc: "Organize sports tournaments and events with just a few clicks.", color: "from-emerald-500 to-teal-600" },
+  { icon: Users, title: "Build Teams", desc: "Form teams, invite players, and manage your squad roster.", color: "from-blue-500 to-indigo-600" },
+  { icon: Calendar, title: "Register Easily", desc: "Sign up for events in seconds and track your participation.", color: "from-purple-500 to-pink-600" },
+  { icon: Shield, title: "Compete & Win", desc: "Track scores, view leaderboards, and earn recognition.", color: "from-orange-500 to-red-600" },
+];
+
+const stats = [
+  { value: "50+", label: "Events Hosted", icon: "🎯" },
+  { value: "500+", label: "Active Students", icon: "👥" },
+  { value: "8+", label: "Sports Categories", icon: "🏆" },
+  { value: "15+", label: "Partner Colleges", icon: "🏫" },
 ];
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [visibleSections, setVisibleSections] = useState({});
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const fadeInUp = (delay = 0) => ({
+    opacity: 0,
+    transform: 'translateY(30px)',
+    transition: `all 0.6s ease-out ${delay}s`,
+  });
+
+  const fadeInUpVisible = {
+    opacity: 1,
+    transform: 'translateY(0)',
+  };
 
   return (
-    <div className="min-h-screen theme-page">
+    <div className="min-h-screen theme-page overflow-x-hidden">
+      {/* Animated Background Orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/3 -left-32 w-80 h-80 bg-blue-500/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute -bottom-32 right-1/4 w-72 h-72 bg-purple-500/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
 
-      {/* Navbar */}
-      <nav className="flex justify-between items-center px-4 sm:px-8 py-4 sm:py-6 border-b theme-separator">
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-wide theme-text-primary">
-          <span className="text-green-400">Campus</span> Arena
-        </h1>
+      {/* ===== NAVBAR ===== */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'theme-navbar shadow-lg shadow-black/10 py-3' 
+          : 'bg-transparent py-5'
+      }`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/25 group-hover:shadow-emerald-500/40 transition-all duration-300 group-hover:scale-105">
+                <Trophy className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl sm:text-2xl font-bold">
+                <span className="text-emerald-500">Campus</span>
+                <span className="theme-text-primary">Arena</span>
+              </span>
+            </Link>
 
-        {/* Desktop Nav */}
-        <div className="hidden sm:flex gap-8 items-center">
-          <a href="#about" className="theme-text-muted hover:text-green-400 transition">About</a>
-          <a href="#sports" className="theme-text-muted hover:text-green-400 transition">Sports</a>
-          <a href="#contact" className="theme-text-muted hover:text-green-400 transition">Contact</a>
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-8">
+              <a href="#about" className="theme-text-secondary hover:text-emerald-500 font-medium transition-colors relative group">
+                About
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-500 group-hover:w-full transition-all duration-300" />
+              </a>
+              <a href="#sports" className="theme-text-secondary hover:text-emerald-500 font-medium transition-colors relative group">
+                Sports
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-500 group-hover:w-full transition-all duration-300" />
+              </a>
+              <a href="#features" className="theme-text-secondary hover:text-emerald-500 font-medium transition-colors relative group">
+                Features
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-500 group-hover:w-full transition-all duration-300" />
+              </a>
+              <a href="#contact" className="theme-text-secondary hover:text-emerald-500 font-medium transition-colors relative group">
+                Contact
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-500 group-hover:w-full transition-all duration-300" />
+              </a>
+            </div>
+
+            {/* Desktop CTA Buttons */}
+            <div className="hidden md:flex items-center gap-4">
+              <Link to="/login" className="theme-text-secondary hover:text-emerald-500 font-semibold transition-colors">
+                Sign In
+              </Link>
+              <Link
+                to="/register"
+                className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-105 flex items-center gap-2"
+              >
+                Get Started <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden theme-text-primary p-2 hover:bg-white/10 rounded-xl transition-colors"
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="sm:hidden theme-text-muted hover:theme-text-primary transition"
-        >
-          {menuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="md:hidden theme-card border-t theme-separator mt-4 mx-4 rounded-2xl p-6 animate-fade-in-up">
+            <div className="flex flex-col gap-4">
+              <a href="#about" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-emerald-500 font-medium py-2 transition-colors">About</a>
+              <a href="#sports" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-emerald-500 font-medium py-2 transition-colors">Sports</a>
+              <a href="#features" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-emerald-500 font-medium py-2 transition-colors">Features</a>
+              <a href="#contact" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-emerald-500 font-medium py-2 transition-colors">Contact</a>
+              <hr className="theme-separator my-2" />
+              <Link to="/login" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-emerald-500 font-semibold py-2 transition-colors text-center">Sign In</Link>
+              <Link
+                to="/register"
+                onClick={() => setMenuOpen(false)}
+                className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-xl font-semibold text-center"
+              >
+                Get Started Free
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="sm:hidden theme-card border-b theme-separator px-4 py-4 flex flex-col gap-3 text-center">
-          <a href="#about" className="theme-text-muted hover:text-green-400 transition py-2" onClick={() => setMenuOpen(false)}>About</a>
-          <a href="#sports" className="theme-text-muted hover:text-green-400 transition py-2" onClick={() => setMenuOpen(false)}>Sports</a>
-          <a href="#contact" className="theme-text-muted hover:text-green-400 transition py-2" onClick={() => setMenuOpen(false)}>Contact</a>
-        </div>
-      )}
-
       {/* ===== HERO SECTION ===== */}
-      <section className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-20 sm:py-28">
-        <div className="inline-block bg-green-500/10 border border-green-500/30 px-4 py-1.5 rounded-full text-green-400 text-sm font-semibold mb-6">
-          🎯 Campus Sports Platform
-        </div>
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-black leading-tight theme-text-primary">
-          Your Campus.
-          <br />
-          <span className="text-green-400">Your Game.</span>
-        </h1>
-
-        <p className="mt-6 sm:mt-8 max-w-2xl text-base sm:text-lg theme-text-secondary px-2">
-          Participate in sports events, register online,
-          create tournaments, join teams, become an organizer,
-          and compete with students across your campus.
-        </p>
-
-        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center px-4 sm:px-0">
-          <Link
-            to="/register"
-            className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-semibold text-center text-lg"
-          >
-            Get Started Free
-          </Link>
-          <Link
-            to="/login"
-            className="border border-green-500 text-green-400 px-8 py-4 rounded-xl font-semibold text-center text-lg hover:bg-green-500 hover:text-white transition"
-          >
-            Sign In
-          </Link>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-6 sm:gap-12 mt-16">
-          <div className="text-center">
-            <p className="text-3xl sm:text-4xl font-bold text-green-400">50+</p>
-            <p className="theme-text-muted text-sm mt-1">Events Hosted</p>
+      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 pt-24 pb-16">
+        <div className="max-w-6xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-4 py-2 mb-8 animate-fade-in-up">
+            <Sparkles className="w-4 h-4 text-emerald-500" />
+            <span className="text-emerald-600 dark:text-emerald-400 text-sm font-semibold">
+              #1 Campus Sports Platform
+            </span>
           </div>
-          <div className="text-center">
-            <p className="text-3xl sm:text-4xl font-bold text-green-400">500+</p>
-            <p className="theme-text-muted text-sm mt-1">Active Students</p>
+
+          {/* Main Heading */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight theme-text-primary mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            Your Campus.<br />
+            <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 bg-clip-text text-transparent">
+              Your Game.
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-lg sm:text-xl theme-text-secondary max-w-2xl mx-auto mb-10 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            The ultimate platform for campus sports. Create tournaments, build teams, 
+            track scores, and compete with students across your campus.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <Link
+              to="/register"
+              className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-105 flex items-center justify-center gap-2"
+            >
+              <Zap className="w-5 h-5" />
+              Get Started Free
+            </Link>
+            <Link
+              to="/login"
+              className="border-2 border-emerald-500/30 hover:border-emerald-500 text-emerald-600 dark:text-emerald-400 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-emerald-500/10 transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              Sign In
+            </Link>
           </div>
-          <div className="text-center">
-            <p className="text-3xl sm:text-4xl font-bold text-green-400">8+</p>
-            <p className="theme-text-muted text-sm mt-1">Sports Categories</p>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            {stats.map((stat, idx) => (
+              <div key={idx} className="theme-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="text-3xl mb-2">{stat.icon}</div>
+                <div className="text-3xl sm:text-4xl font-black text-emerald-500">{stat.value}</div>
+                <div className="theme-text-muted text-sm font-medium mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-emerald-500/30 rounded-full flex items-start justify-center p-2">
+            <div className="w-1.5 h-3 bg-emerald-500 rounded-full animate-pulse" />
           </div>
         </div>
       </section>
 
       {/* ===== FEATURES SECTION ===== */}
-      <section className="px-4 sm:px-8 py-16 sm:py-20 max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center theme-text-primary mb-4">
-          Why <span className="text-green-400">Campus Arena</span>?
-        </h2>
-        <p className="theme-text-muted text-center max-w-xl mx-auto mb-12">
-          Everything you need to manage and participate in campus sports events.
-        </p>
+      <section id="features" className="px-4 sm:px-6 py-24 max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <span className="inline-block bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+            Features
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black theme-text-primary mb-4">
+            Why <span className="text-emerald-500">Campus Arena</span>?
+          </h2>
+          <p className="theme-text-secondary max-w-2xl mx-auto text-lg">
+            Everything you need to manage and participate in campus sports events.
+          </p>
+        </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, idx) => (
-            <div key={idx} className="theme-card rounded-2xl p-6 text-center hover:scale-105 transition">
-              <div className="w-14 h-14 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <feature.icon size={28} className="text-green-400" />
+            <div 
+              key={idx} 
+              className="theme-card rounded-2xl p-6 group hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+            >
+              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110`}>
+                <feature.icon className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-lg font-bold theme-text-primary mb-2">{feature.title}</h3>
-              <p className="theme-text-muted text-sm">{feature.desc}</p>
+              <h3 className="text-xl font-bold theme-text-primary mb-3">{feature.title}</h3>
+              <p className="theme-text-muted leading-relaxed">{feature.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ===== ABOUT SECTION ===== */}
-      <section id="about" className="px-4 sm:px-8 py-16 sm:py-20 max-w-6xl mx-auto">
-        <div className="theme-card rounded-3xl p-8 sm:p-12">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
+      <section id="about" className="px-4 sm:px-6 py-24 max-w-7xl mx-auto">
+        <div className="theme-card rounded-3xl p-8 sm:p-12 lg:p-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold theme-text-primary mb-6">
-                About <span className="text-green-400">Campus Arena</span>
+              <span className="inline-block bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+                About Us
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black theme-text-primary mb-6">
+                Built for Students,<br />
+                <span className="text-emerald-500">By Students</span>
               </h2>
-              <div className="space-y-4 theme-text-secondary">
+              <div className="space-y-4 theme-text-secondary text-lg leading-relaxed">
                 <p>
-                  Campus Arena is a dedicated sports event management platform built for students, by students. 
-                  Our mission is to make campus sports accessible, organized, and competitive.
+                  Campus Arena is the dedicated sports event management platform designed to 
+                  revolutionize how college sports are organized and experienced.
                 </p>
                 <p>
                   We provide a centralized hub where students can discover upcoming sports events, 
@@ -147,99 +259,164 @@ export default function Home() {
                   their campus sports community.
                 </p>
                 <p>
-                  Whether you're a casual player looking for a friendly match or a competitive athlete 
-                  aiming for the championship, Campus Arena brings the entire campus sports ecosystem 
-                  to your fingertips.
+                  Whether you're a casual player looking for a friendly match or a competitive 
+                  athlete aiming for the championship, Campus Arena brings the entire campus 
+                  sports ecosystem to your fingertips.
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 mt-8">
-                <div className="theme-card-inner rounded-xl p-4 text-center">
-                  <p className="text-2xl font-bold text-green-400">🎯</p>
-                  <p className="text-sm theme-text-primary font-semibold mt-1">Mission</p>
+              {/* Value Cards */}
+              <div className="grid grid-cols-2 gap-4 mt-10">
+                <div className="theme-card-inner rounded-xl p-5 text-center hover:scale-105 transition-transform">
+                  <Target className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
+                  <p className="text-sm theme-text-primary font-bold">Mission</p>
                   <p className="text-xs theme-text-muted mt-1">Unite campus through sports</p>
                 </div>
-                <div className="theme-card-inner rounded-xl p-4 text-center">
-                  <p className="text-2xl font-bold text-green-400">👁️</p>
-                  <p className="text-sm theme-text-primary font-semibold mt-1">Vision</p>
+                <div className="theme-card-inner rounded-xl p-5 text-center hover:scale-105 transition-transform">
+                  <Award className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
+                  <p className="text-sm theme-text-primary font-bold">Vision</p>
                   <p className="text-xs theme-text-muted mt-1">Every student plays</p>
                 </div>
-                <div className="theme-card-inner rounded-xl p-4 text-center">
-                  <p className="text-2xl font-bold text-green-400">🤝</p>
-                  <p className="text-sm theme-text-primary font-semibold mt-1">Community</p>
+                <div className="theme-card-inner rounded-xl p-5 text-center hover:scale-105 transition-transform">
+                  <Users className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
+                  <p className="text-sm theme-text-primary font-bold">Community</p>
                   <p className="text-xs theme-text-muted mt-1">500+ active members</p>
                 </div>
-                <div className="theme-card-inner rounded-xl p-4 text-center">
-                  <p className="text-2xl font-bold text-green-400">🏆</p>
-                  <p className="text-sm theme-text-primary font-semibold mt-1">Events</p>
+                <div className="theme-card-inner rounded-xl p-5 text-center hover:scale-105 transition-transform">
+                  <Trophy className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
+                  <p className="text-sm theme-text-primary font-bold">Events</p>
                   <p className="text-xs theme-text-muted mt-1">50+ hosted yearly</p>
                 </div>
               </div>
             </div>
 
-            <div className="theme-card-inner rounded-2xl p-8 text-center">
-              <Trophy size={80} className="mx-auto text-green-400 mb-4" />
-              <h3 className="text-xl font-bold theme-text-primary mb-3">Join the Arena</h3>
-              <p className="theme-text-muted text-sm mb-2">
-                Be part of the most active campus sports community. Register now and start your journey.
-              </p>
+            {/* Visual Element */}
+            <div className="relative">
+              <div className="theme-card-inner rounded-3xl p-10 text-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent" />
+                <div className="relative z-10">
+                  <div className="w-32 h-32 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-2xl shadow-emerald-500/30 animate-float">
+                    <Trophy className="w-16 h-16 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold theme-text-primary mb-3">Join the Arena</h3>
+                  <p className="theme-text-muted mb-6 max-w-sm mx-auto">
+                    Be part of the most active campus sports community. Register now and start your journey.
+                  </p>
+                  <Link
+                    to="/register"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
+                  >
+                    Get Started <ChevronRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+              {/* Decorative Elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-emerald-500/20 rounded-full blur-2xl" />
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl" />
             </div>
           </div>
         </div>
       </section>
 
       {/* ===== SPORTS SECTION ===== */}
-      <section id="sports" className="px-4 sm:px-8 py-16 sm:py-20 max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center theme-text-primary mb-4">
-          Sports We <span className="text-green-400">Cover</span>
-        </h2>
-        <p className="theme-text-muted text-center max-w-xl mx-auto mb-12">
-          From the field to the court, we've got a wide range of sports for every athlete.
-        </p>
+      <section id="sports" className="px-4 sm:px-6 py-24 max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <span className="inline-block bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+            Sports
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black theme-text-primary mb-4">
+            Sports We <span className="text-emerald-500">Cover</span>
+          </h2>
+          <p className="theme-text-secondary max-w-2xl mx-auto text-lg">
+            From the field to the court, we've got a wide range of sports for every athlete.
+          </p>
+        </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {sportsList.map((sport, idx) => (
             <div
               key={idx}
-              className="theme-card rounded-2xl p-5 hover:scale-105 transition group cursor-default"
+              className="theme-card rounded-2xl p-6 group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
             >
-              <div className="text-4xl mb-3">{sport.emoji}</div>
-              <h3 className="text-lg font-bold theme-text-primary mb-2">{sport.name}</h3>
+              <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                {sport.emoji}
+              </div>
+              <h3 className="text-xl font-bold theme-text-primary mb-2">{sport.name}</h3>
               <p className="theme-text-muted text-sm leading-relaxed">{sport.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
+      {/* ===== CTA SECTION ===== */}
+      <section className="px-4 sm:px-6 py-24">
+        <div className="max-w-5xl mx-auto">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 p-12 sm:p-16 text-center">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-3xl" />
+              <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl" />
+            </div>
+            
+            <div className="relative z-10">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
+                Ready to Start Playing?
+              </h2>
+              <p className="text-white/80 text-lg max-w-2xl mx-auto mb-8">
+                Join thousands of students who are already competing, winning, and having fun on Campus Arena.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  to="/register"
+                  className="bg-white text-emerald-600 px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
+                >
+                  <Zap className="w-5 h-5" />
+                  Get Started Free
+                </Link>
+                <Link
+                  to="/login"
+                  className="border-2 border-white/30 hover:border-white text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 transition-all duration-300"
+                >
+                  Sign In
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== CONTACT SECTION ===== */}
-      <section id="contact" className="px-4 sm:px-8 py-16 sm:py-20 max-w-6xl mx-auto">
-        <div className="theme-card rounded-3xl p-8 sm:p-12">
-          <div className="grid md:grid-cols-2 gap-10">
+      <section id="contact" className="px-4 sm:px-6 py-24 max-w-7xl mx-auto">
+        <div className="theme-card rounded-3xl p-8 sm:p-12 lg:p-16">
+          <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold theme-text-primary mb-6">
-                Get in <span className="text-green-400">Touch</span>
+              <span className="inline-block bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+                Contact
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-black theme-text-primary mb-4">
+                Get in <span className="text-emerald-500">Touch</span>
               </h2>
-              <p className="theme-text-secondary mb-8">
-                Have questions, suggestions, or want to organize an event? We'd love to hear from you.
-                Reach out to us through any of the channels below.
+              <p className="theme-text-secondary text-lg mb-8">
+                Have questions, suggestions, or want to organize an event? 
+                We'd love to hear from you.
               </p>
 
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 bg-green-500/20 rounded-xl flex items-center justify-center shrink-0">
-                    <Mail size={20} className="text-green-400" />
+                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5 text-emerald-500" />
                   </div>
                   <div>
                     <p className="font-semibold theme-text-primary">Email</p>
-                    <p className="theme-text-muted text-sm">supportcampusarena@gmail.com</p>
+                    <p className="theme-text-muted text-sm">support@campusarena.com</p>
                     <p className="theme-text-muted text-sm">events@campusarena.com</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 bg-green-500/20 rounded-xl flex items-center justify-center shrink-0">
-                    <MapPin size={20} className="text-green-400" />
+                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5 text-emerald-500" />
                   </div>
                   <div>
                     <p className="font-semibold theme-text-primary">Location</p>
@@ -249,8 +426,8 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 bg-green-500/20 rounded-xl flex items-center justify-center shrink-0">
-                    <Phone size={20} className="text-green-400" />
+                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+                    <Phone className="w-5 h-5 text-emerald-500" />
                   </div>
                   <div>
                     <p className="font-semibold theme-text-primary">Phone</p>
@@ -260,24 +437,21 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex gap-3 mt-8">
-                <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-green-500/20 transition cursor-pointer">
-                  <span className="text-lg">📘</span>
-                </div>
-                <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-green-500/20 transition cursor-pointer">
-                  <span className="text-lg">📸</span>
-                </div>
-                <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-green-500/20 transition cursor-pointer">
-                  <span className="text-lg">🐦</span>
-                </div>
-                <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-green-500/20 transition cursor-pointer">
-                  <span className="text-lg">💬</span>
-                </div>
+              {/* Social Links */}
+              <div className="flex gap-3 mt-10">
+                {['📘', '📸', '🐦', '💬'].map((emoji, idx) => (
+                  <div 
+                    key={idx}
+                    className="w-12 h-12 theme-card-inner rounded-xl flex items-center justify-center hover:bg-emerald-500/20 transition-colors cursor-pointer text-xl"
+                  >
+                    {emoji}
+                  </div>
+                ))}
               </div>
             </div>
 
             {/* Contact Form */}
-            <div className="theme-card-inner rounded-2xl p-6 sm:p-8">
+            <div className="theme-card-inner rounded-2xl p-8">
               <h3 className="text-xl font-bold theme-text-primary mb-6">Send us a Message</h3>
               <form
                 onSubmit={(e) => {
@@ -285,51 +459,51 @@ export default function Home() {
                   alert("Thank you for your message! We'll get back to you soon.");
                   e.target.reset();
                 }}
-                className="space-y-4"
+                className="space-y-5"
               >
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm theme-text-muted mb-1">Name</label>
+                    <label className="block text-sm font-medium theme-text-secondary mb-2">Name</label>
                     <input
                       type="text"
                       required
                       placeholder="Your name"
-                      className="w-full theme-input rounded-xl px-4 py-3 text-sm"
+                      className="w-full theme-input rounded-xl px-4 py-3"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm theme-text-muted mb-1">Email</label>
+                    <label className="block text-sm font-medium theme-text-secondary mb-2">Email</label>
                     <input
                       type="email"
                       required
                       placeholder="your@email.com"
-                      className="w-full theme-input rounded-xl px-4 py-3 text-sm"
+                      className="w-full theme-input rounded-xl px-4 py-3"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm theme-text-muted mb-1">Subject</label>
+                  <label className="block text-sm font-medium theme-text-secondary mb-2">Subject</label>
                   <input
                     type="text"
                     required
                     placeholder="How can we help?"
-                    className="w-full theme-input rounded-xl px-4 py-3 text-sm"
+                    className="w-full theme-input rounded-xl px-4 py-3"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm theme-text-muted mb-1">Message</label>
+                  <label className="block text-sm font-medium theme-text-secondary mb-2">Message</label>
                   <textarea
                     rows={4}
                     required
                     placeholder="Write your message here..."
-                    className="w-full theme-input rounded-xl px-4 py-3 text-sm resize-none"
+                    className="w-full theme-input rounded-xl px-4 py-3 resize-none"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-[1.02]"
                 >
-                  Send Message <ChevronRight size={18} />
+                  Send Message <ChevronRight className="w-4 h-4" />
                 </button>
               </form>
             </div>
@@ -337,17 +511,55 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* ===== FOOTER ===== */}
-      <footer className="border-t theme-separator px-4 sm:px-8 py-8">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="theme-text-muted text-sm">
-            © 2026 <span className="text-green-400 font-semibold">Campus Arena</span>. All rights reserved.
-          </p>
-          <div className="flex gap-6 text-sm">
-            <a href="#about" className="theme-text-muted hover:text-green-400 transition">About</a>
-            <a href="#sports" className="theme-text-muted hover:text-green-400 transition">Sports</a>
-            <a href="#contact" className="theme-text-muted hover:text-green-400 transition">Contact</a>
+      <footer className="border-t theme-separator px-4 sm:px-6 py-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            {/* Brand */}
+            <div className="lg:col-span-2">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                  <Trophy className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-lg font-bold">
+                  <span className="text-emerald-500">Campus</span>
+                  <span className="theme-text-primary">Arena</span>
+                </span>
+              </div>
+              <p className="theme-text-muted max-w-sm">
+                The ultimate platform for campus sports. Connect, compete, and celebrate with your campus community.
+              </p>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="font-bold theme-text-primary mb-4">Quick Links</h4>
+              <div className="flex flex-col gap-3">
+                <a href="#about" className="theme-text-muted hover:text-emerald-500 transition-colors">About</a>
+                <a href="#sports" className="theme-text-muted hover:text-emerald-500 transition-colors">Sports</a>
+                <a href="#features" className="theme-text-muted hover:text-emerald-500 transition-colors">Features</a>
+                <a href="#contact" className="theme-text-muted hover:text-emerald-500 transition-colors">Contact</a>
+              </div>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h4 className="font-bold theme-text-primary mb-4">Legal</h4>
+              <div className="flex flex-col gap-3">
+                <a href="#" className="theme-text-muted hover:text-emerald-500 transition-colors">Privacy Policy</a>
+                <a href="#" className="theme-text-muted hover:text-emerald-500 transition-colors">Terms of Service</a>
+                <a href="#" className="theme-text-muted hover:text-emerald-500 transition-colors">Cookie Policy</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t theme-separator pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="theme-text-muted text-sm">
+              © 2026 <span className="text-emerald-500 font-semibold">Campus Arena</span>. All rights reserved.
+            </p>
+            <p className="theme-text-muted text-sm">
+              Built with ❤️ for campus athletes
+            </p>
           </div>
         </div>
       </footer>

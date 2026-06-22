@@ -11,6 +11,7 @@ import EventSearch from "../components/EventSearch";
 import EventCalendar from "../components/EventCalendar";
 import SportTag from "../components/SportTag";
 import { CardSkeleton } from "../components/Skeleton";
+import { Calendar, Trophy, Users, Target, ArrowRight, Zap, Award } from "lucide-react";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -81,7 +82,7 @@ export default function Dashboard() {
       <>
         <Navbar />
         <div className="min-h-screen theme-page">
-          <div className="max-w-7xl mx-auto px-6 py-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             <div className="theme-card rounded-3xl p-6 sm:p-8 mb-10">
               <div className="h-8 bg-white/10 rounded w-2/3 animate-pulse" />
               <div className="h-4 bg-white/10 rounded w-1/3 mt-3 animate-pulse" />
@@ -100,81 +101,126 @@ export default function Dashboard() {
       <Navbar />
 
       <div className="min-h-screen theme-page">
-        <div className="max-w-7xl mx-auto px-6 py-10">
-
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          
           {/* Welcome Card */}
-          <div className="theme-card rounded-3xl p-6 sm:p-8">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold theme-text-primary">
-              Welcome Back,
-              <span className="text-green-400">
-                {" "}
-                {user?.name || "Student"}
-              </span>{" "}
-              👋
-            </h1>
-
-            <p className="mt-3 text-lg theme-text-secondary">
-              Department: {user?.department || "Not Available"}
-            </p>
-
-            {user?.module && (
-              <p className="theme-text-muted mt-1">
-                {user.module} • {user.semester || "N/A"} Semester
-              </p>
-            )}
-
-            <p className="theme-text-muted mt-2">
-              Stay active, participate in events and make your campus proud.
-            </p>
-          </div>
-
-          {/* Stats */}
-          <div className="grid md:grid-cols-3 gap-6 mt-10">
-            <div className="theme-stat-card rounded-2xl p-6 shadow-lg hover:scale-105 transition">
-              <h2 className="text-4xl font-bold text-green-400">
-                {events.length}
-              </h2>
-              <p className="theme-text-secondary mt-2">
-                Total Events
-              </p>
-            </div>
-
-            <div className="theme-stat-card rounded-2xl p-6 shadow-lg hover:scale-105 transition">
-              <h2 className="text-4xl font-bold text-green-400">
-                {myRegistrations.length}
-              </h2>
-              <p className="theme-text-secondary mt-2">
-                Registered Events
-              </p>
-            </div>
-
-            <div className="theme-stat-card rounded-2xl p-6 shadow-lg hover:scale-105 transition">
-              <h2 className="text-4xl font-bold text-green-400">
-                {sports.length}
-              </h2>
-              <p className="theme-text-secondary mt-2">
-                Sports Categories
-              </p>
+          <div className="relative overflow-hidden theme-card rounded-3xl p-6 sm:p-8 lg:p-10">
+            {/* Background Gradient */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl" />
+            
+            <div className="relative z-10">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div>
+                  <p className="text-sm font-semibold text-emerald-500 mb-2">
+                    👋 Welcome back
+                  </p>
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black theme-text-primary">
+                    {user?.name || "Student"}
+                  </h1>
+                  <p className="theme-text-secondary mt-2 text-lg">
+                    {user?.department || "Department not set"}
+                  </p>
+                  {user?.module && (
+                    <p className="theme-text-muted mt-1">
+                      {user.module} • {user.semester || "N/A"} Semester
+                    </p>
+                  )}
+                </div>
+                
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    onClick={() => navigate(user?.role === "organizer" ? "/organizer-dashboard" : "/request-organizer")}
+                    className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 flex items-center gap-2"
+                  >
+                    <Zap className="w-4 h-4" />
+                    {user?.role === "organizer" ? "Organizer Dashboard" : "Become Organizer"}
+                  </button>
+                  
+                  {user?.role === "admin" && (
+                    <button
+                      onClick={() => navigate("/admin/requests")}
+                      className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-purple-500/25 flex items-center gap-2"
+                    >
+                      <Award className="w-4 h-4" />
+                      Organizer Requests
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Calendar + Events Section */}
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-8">
+            <div className="theme-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-3xl font-black text-emerald-500">{events.length}</p>
+                  <p className="theme-text-secondary text-sm mt-1">Total Events</p>
+                </div>
+                <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                  <Trophy className="w-6 h-6 text-emerald-500" />
+                </div>
+              </div>
+            </div>
+
+            <div className="theme-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-3xl font-black text-blue-500">{myRegistrations.length}</p>
+                  <p className="theme-text-secondary text-sm mt-1">Registered</p>
+                </div>
+                <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                  <Target className="w-6 h-6 text-blue-500" />
+                </div>
+              </div>
+            </div>
+
+            <div className="theme-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-3xl font-black text-purple-500">{sports.length}</p>
+                  <p className="theme-text-secondary text-sm mt-1">Sports</p>
+                </div>
+                <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center">
+                  <Award className="w-6 h-6 text-purple-500" />
+                </div>
+              </div>
+            </div>
+
+            <div className="theme-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-3xl font-black text-orange-500">
+                    {events.filter(e => e.date === new Date().toISOString().split('T')[0]).length}
+                  </p>
+                  <p className="theme-text-secondary text-sm mt-1">Today</p>
+                </div>
+                <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                  <Calendar className="w-6 h-6 text-orange-500" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content: Events + Calendar */}
           <div className="mt-10">
             <div className="grid lg:grid-cols-3 gap-6">
-              {/* Calendar (sidebar on large screens) */}
-              <div className="lg:col-span-1 order-2 lg:order-1">
-                <EventCalendar events={events} />
-              </div>
-
               {/* Events (main content) */}
-              <div className="lg:col-span-2 order-1 lg:order-2">
+              <div className="lg:col-span-2">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-3xl font-bold theme-text-primary">
-                    🏆 Upcoming Sports Events
-                  </h2>
+                  <div>
+                    <h2 className="text-2xl sm:text-3xl font-black theme-text-primary">
+                      🏆 Upcoming Events
+                    </h2>
+                    <p className="theme-text-muted text-sm mt-1">
+                      Discover and join exciting sports events
+                    </p>
+                  </div>
                   {events.length > 0 && filteredEvents.length !== events.length && (
-                    <span className="text-sm theme-text-muted">
-                      {filteredEvents.length} of {events.length} events
+                    <span className="theme-text-muted text-sm bg-white/10 px-3 py-1 rounded-full">
+                      {filteredEvents.length} of {events.length}
                     </span>
                   )}
                 </div>
@@ -195,22 +241,19 @@ export default function Dashboard() {
 
                   {/* Sport tag quick filters */}
                   {!showFilters && sports.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3">
+                    <div className="flex flex-wrap gap-2 mt-4">
                       <button
                         onClick={() => setSportFilter("")}
-                        className={`text-xs px-2 py-1 rounded-full font-semibold transition border ${
+                        className={`text-xs px-3 py-1.5 rounded-full font-semibold transition-all ${
                           !sportFilter
-                            ? "bg-green-500/20 text-green-400 border-green-500/30"
-                            : "bg-white/10 text-gray-400 border-white/10 hover:bg-white/20"
+                            ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/25"
+                            : "theme-card theme-text-muted hover:theme-text-primary hover:bg-emerald-500/10"
                         }`}
                       >
-                        All
+                        All Sports
                       </button>
-                      {sports.slice(0, 8).map((s) => (
-                        <button
-                          key={s}
-                          onClick={() => setSportFilter(sportFilter === s ? "" : s)}
-                        >
+                      {sports.slice(0, 6).map((s) => (
+                        <button key={s} onClick={() => setSportFilter(sportFilter === s ? "" : s)}>
                           <SportTag sport={s} />
                         </button>
                       ))}
@@ -218,104 +261,95 @@ export default function Dashboard() {
                   )}
                 </div>
 
+                {/* Events Grid */}
                 {filteredEvents.length === 0 ? (
-                  <div className="theme-card-inner rounded-xl p-8 text-center">
-                    {events.length > 0 ? (
-                      <>
-                        <p className="text-4xl mb-4">🔍</p>
-                        <p className="text-xl theme-text-secondary">No events match your search.</p>
-                        <p className="theme-text-muted mt-2">Try adjusting your filters.</p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="text-4xl mb-4">📭</p>
-                        <p className="text-xl theme-text-secondary">No events available.</p>
-                      </>
-                    )}
+                  <div className="theme-card-inner rounded-2xl p-12 text-center">
+                    <div className="text-6xl mb-4">🔍</div>
+                    <h3 className="text-xl font-bold theme-text-primary mb-2">
+                      {events.length > 0 ? "No events match your search" : "No events available"}
+                    </h3>
+                    <p className="theme-text-muted">
+                      {events.length > 0 
+                        ? "Try adjusting your filters or search terms." 
+                        : "Check back later for upcoming events."}
+                    </p>
                   </div>
                 ) : (
-                  <div className="grid md:grid-cols-2 gap-8">
+                  <div className="grid md:grid-cols-2 gap-6">
                     {filteredEvents.map((event) => (
                       <EventCard key={event.id} event={event} />
                     ))}
                   </div>
                 )}
               </div>
+
+              {/* Calendar (sidebar) */}
+              <div className="lg:col-span-1">
+                <EventCalendar events={events} />
+              </div>
             </div>
           </div>
 
-          {/* Registered Events */}
-          <div className="mt-16">
-            <h2 className="text-3xl font-bold theme-text-primary mb-6">
-              📌 My Registered Events
-            </h2>
-
-            {myRegistrations.length === 0 ? (
-              <div className="theme-card-inner rounded-xl p-8 text-center">
-                <p className="theme-text-secondary">You haven't registered for any events yet.</p>
+          {/* Registered Events Section */}
+          {myRegistrations.length > 0 && (
+            <div className="mt-16">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-2xl sm:text-3xl font-black theme-text-primary">
+                    📌 My Registrations
+                  </h2>
+                  <p className="theme-text-muted text-sm mt-1">
+                    Events you've signed up for
+                  </p>
+                </div>
               </div>
-            ) : (
-              <div className="grid md:grid-cols-2 gap-6">
-                {myRegistrations.map((registration) => {
-                  const event = events.find(
-                    (e) => e.id === registration.eventId
-                  );
 
+              <div className="grid md:grid-cols-2 gap-4">
+                {myRegistrations.map((registration) => {
+                  const event = events.find((e) => e.id === registration.eventId);
                   if (!event) return null;
 
                   return (
                     <div
                       key={registration.id}
-                      className="theme-card border border-green-500/30 rounded-2xl p-6 shadow-lg hover:scale-105 transition"
+                      className="theme-card rounded-2xl p-5 border-l-4 border-l-emerald-500 hover:shadow-lg transition-all duration-300"
                     >
-                      <h3 className="text-2xl font-bold text-green-400">
-                        {event.title}
-                      </h3>
-
-                      <p className="mt-3 theme-text-secondary">
-                        📅 {event.date}
-                      </p>
-
-                      <p className="theme-text-secondary">
-                        📍 {event.location}
-                      </p>
-
-                      <span className="inline-block mt-4 bg-green-500 text-white px-4 py-2 rounded-full">
-                        ✅ Registered
-                      </span>
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold theme-text-primary">
+                            {event.title}
+                          </h3>
+                          <div className="flex flex-wrap gap-3 mt-2 theme-text-secondary text-sm">
+                            <span className="flex items-center gap-1">
+                              <Calendar className="w-4 h-4" />
+                              {event.date}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Target className="w-4 h-4" />
+                              {event.location}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="bg-emerald-500/10 text-emerald-500 px-3 py-1 rounded-full text-xs font-semibold">
+                          ✓ Registered
+                        </span>
+                      </div>
                     </div>
                   );
                 })}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
-          {/* Buttons */}
-          <div className="flex flex-wrap gap-4 mt-12">
-            {user?.role === "admin" && (
-              <button
-                onClick={() => navigate("/admin/requests")}
-                className="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-xl font-semibold transition flex items-center gap-2"
-              >
-                📋 Organizer Requests
-              </button>
-            )}
-
-            <button
-              onClick={() => navigate(user?.role === "organizer" ? "/organizer-dashboard" : "/request-organizer")}
-              className="bg-green-500 hover:bg-green-600 px-6 py-3 rounded-xl font-semibold transition"
-            >
-              {user?.role === "organizer" ? "📊 Organizer Dashboard" : "Become Organizer"}
-            </button>
-
+          {/* Logout Button */}
+          <div className="flex justify-center mt-12">
             <button
               onClick={handleLogout}
-              className="bg-red-500 hover:bg-red-600 px-6 py-3 rounded-xl font-semibold transition"
+              className="theme-card px-6 py-3 rounded-xl font-semibold theme-text-secondary hover:text-red-500 hover:border-red-500/30 transition-all duration-300 flex items-center gap-2"
             >
-              Logout
+              Sign Out
             </button>
           </div>
-
         </div>
       </div>
     </>
