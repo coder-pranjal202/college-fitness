@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+/* ===== LIGHT THEME (default) ===== */
+:root {
+  --page-bg: linear-gradient(135deg, #f0fdf4, #f8fafc, #ecfdf5);
+  --page-bg-solid: #f0fdf4;
+  --card-bg: rgba(255, 255, 255, 0.75);
+  --card-bg-solid: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --card-bg-inner: rgba(0, 0, 0, 0.03);
+  --card-border-inner: rgba(0, 0, 0, 0.06);
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --input-bg: rgba(0, 0, 0, 0.03);
+  --input-border: rgba(0, 0, 0, 0.12);
+  --input-text: #0f172a;
+  --input-placeholder: #94a3b8;
+  --navbar-bg: linear-gradient(135deg, #166534, #14532d);
+  --accent: #16a34a;
+  --accent-glow: rgba(22, 163, 74, 0.2);
+  --danger-bg: rgba(239, 68, 68, 0.1);
+  --danger-border: rgba(239, 68, 68, 0.3);
+  --selection-bg: rgba(22, 163, 74, 0.2);
+}
+
+/* ===== "STADIUM NIGHTS" DARK THEME ===== */
+.dark {
+  --page-bg: linear-gradient(135deg, #0a0f1a 0%, #041010 50%, #001a10 100%);
+  --page-bg-solid: #0a0f1a;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-bg-solid: rgba(255, 255, 255, 0.06);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-bg-inner: rgba(255, 255, 255, 0.03);
+  --card-border-inner: rgba(255, 255, 255, 0.05);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.12);
+  --input-text: #f1f5f9;
+  --input-placeholder: #4b5563;
+  --navbar-bg: linear-gradient(135deg, #0a0f1a, #001a10);
+  --accent: #39ff78;
+  --accent-glow: rgba(57, 255, 120, 0.15);
+  --danger-bg: rgba(251, 113, 133, 0.12);
+  --danger-border: rgba(251, 113, 133, 0.3);
+  --selection-bg: rgba(57, 255, 120, 0.15);
+}
+
+/* ===== Theme Utility Classes ===== */
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--selection-bg);
+}
+
+/* Scrollbar styling for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.dark ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Page background */
+.theme-page {
+  background: var(--page-bg);
+  color: var(--text-primary);
+}
+
+/* Card containers */
+.theme-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.theme-card-inner {
+  background: var(--card-bg-inner);
+  border: 1px solid var(--card-border-inner);
+}
+
+/* Text colors */
+.theme-text-primary {
+  color: var(--text-primary) !important;
+}
+
+.theme-text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.theme-text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Inputs */
+.theme-input {
+  background: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  color: var(--input-text) !important;
+}
+
+.theme-input::placeholder {
+  color: var(--input-placeholder) !important;
+}
+
+.theme-input:focus {
+  outline: none !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px var(--accent-glow) !important;
+}
+
+/* Navbar */
+.theme-navbar {
+  background: var(--navbar-bg);
+  border-bottom: 1px solid rgba(57, 255, 120, 0.08);
+}
+
+/* Danger */
+.theme-danger {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+}
+
+/* Textarea */
+textarea.theme-input {
+  resize: none;
+}
+
+/* Table rows */
+.theme-table-row {
+  border-bottom: 1px solid var(--card-border-inner);
+}
+
+.theme-table-row:hover {
+  background: var(--card-bg-inner);
+}
+
+.theme-table-header {
+  border-bottom: 1px solid var(--card-border);
+}
+
+/* Button ghosts */
+.theme-btn-ghost {
+  color: var(--text-muted);
+}
+
+.theme-btn-ghost:hover {
+  color: var(--text-primary);
+}
+
+/* Stats card */
+.theme-stat-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+}
+
+/* Section separator */
+.theme-separator {
+  border-color: var(--card-border);
+}
+
+/* Smooth transition for all themed elements */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ===== Tailwind accent color override ===== */
+.dark .accent-green {
+  color: var(--accent);
+}
+
+/* Animated gradient glow for accent elements */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px var(--accent-glow); }
+  50% { box-shadow: 0 0 20px var(--accent-glow); }
+}
+
+.glow-accent {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
