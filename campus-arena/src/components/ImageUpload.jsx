@@ -123,9 +123,13 @@ export default function ImageUpload({
             <img
               src={preview}
               alt="Preview"
-              className="w-40 h-40 sm:w-48 sm:h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+              className={`${
+                cropShape === "round" 
+                  ? "w-40 h-40 sm:w-48 sm:h-48" 
+                  : "w-64 h-40 sm:w-80 sm:h-56 md:w-96 md:h-64"
+              } object-cover transition-transform duration-300 group-hover:scale-105`}
               onError={(e) => {
-                e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666'%3E%3Cpath d='M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z'/%3E%3C/svg%3E";
+                e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666'%3E%3Cpath d='M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0-1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z'/%3E%3C/svg%3E";
               }}
             />
           </div>
@@ -151,7 +155,11 @@ export default function ImageUpload({
       ) : (
         <div
           onClick={() => !uploading && fileInputRef.current?.click()}
-          className={`relative w-40 h-40 sm:w-48 sm:h-48 border-2 border-dashed border-gray-600 hover:border-green-400/70 rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all duration-200 bg-white/[0.03] hover:bg-white/[0.07] hover:shadow-lg hover:shadow-green-500/5 group ${uploading ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`relative ${
+            cropShape === "round"
+              ? "w-40 h-40 sm:w-48 sm:h-48"
+              : "w-64 h-40 sm:w-80 sm:h-56 md:w-96 md:h-64"
+          } border-2 border-dashed border-gray-600 hover:border-green-400/70 rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all duration-200 bg-white/[0.03] hover:bg-white/[0.07] hover:shadow-lg hover:shadow-green-500/5 group ${uploading ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           {uploading ? (
             <>
