@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Menu, X, Trophy, Users, Calendar, Shield, Mail, MapPin, Phone, ChevronRight, Sparkles, ArrowRight, Zap, Target, Award } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Menu, X, Trophy, Users, Calendar, Shield, Mail, MapPin, Phone, ChevronRight, Sparkles, ArrowRight, Zap, Target, Award, Send } from "lucide-react";
+import emailjs from '@emailjs/browser';
 
 const sportsList = [
   { name: "Cricket", emoji: "🏏", desc: "Test matches, T20 tournaments, and friendly games on the campus ground." },
@@ -31,6 +32,8 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const formRef = useRef();
+  const [formStatus, setFormStatus] = useState({ loading: false, success: false, error: false });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -410,11 +413,49 @@ export default function Home() {
             {/* Contact Form */}
             <div className="theme-card-inner rounded-2xl p-8">
               <h3 className="text-xl font-bold theme-text-primary mb-6">Send us a Message</h3>
+              {/* Success Message */}
+              {formStatus.success && (
+                <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 px-4 py-3 rounded-xl text-sm mb-4 animate-fade-in-up">
+                  ✅ Message sent successfully! We'll get back to you soon.
+                </div>
+              )}
+              {/* Error Message */}
+              {formStatus.error && (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-500 px-4 py-3 rounded-xl text-sm mb-4 animate-fade-in-up">
+                  ❌ Failed to send message. Please try again or email us directly.
+                </div>
+              )}
               <form
-                onSubmit={(e) => {
+                ref={formRef}
+                onSubmit={async (e) => {
                   e.preventDefault();
-                  alert("Thank you for your message! We'll get back to you soon.");
-                  e.target.reset();
+                  setFormStatus({ loading: true, success: false, error: false });
+                  
+                  const formData = new FormData(e.target);
+                  const templateParams = {
+                    from_name: formData.get('name'),
+                    from_email: formData.get('email'),
+                    subject: formData.get('subject'),
+                    message: formData.get('message'),
+                    to_email: 'campusevents2026@gmail.com'
+                  };
+
+                  try {
+                    // EmailJS configuration - Replace with your actual credentials
+                    await emailjs.send(
+                      'service_pdqdmno',      // Replace with your EmailJS Service ID
+                      'template_yq3hxr1',     // Replace with your EmailJS Template ID
+                      templateParams,
+                      'Afyrm6R8KHhRKGwAV'       // Replace with your EmailJS Public Key
+                    );
+                    setFormStatus({ loading: false, success: true, error: false });
+                    e.target.reset();
+                    setTimeout(() => setFormStatus(prev => ({ ...prev, success: false })), 5000);
+                  } catch (error) {
+                    console.error('Failed to send email:', error);
+                    setFormStatus({ loading: false, success: false, error: true });
+                    setTimeout(() => setFormStatus(prev => ({ ...prev, error: false })), 5000);
+                  }
                 }}
                 className="space-y-5"
               >
@@ -423,6 +464,7 @@ export default function Home() {
                     <label className="block text-sm font-semibold theme-text-secondary mb-2">Name</label>
                     <input
                       type="text"
+                      name="name"
                       required
                       placeholder="Your name"
                       className="w-full theme-input rounded-xl px-4 py-3"
@@ -432,6 +474,7 @@ export default function Home() {
                     <label className="block text-sm font-semibold theme-text-secondary mb-2">Email</label>
                     <input
                       type="email"
+                      name="email"
                       required
                       placeholder="your@email.com"
                       className="w-full theme-input rounded-xl px-4 py-3"
@@ -442,6 +485,7 @@ export default function Home() {
                   <label className="block text-sm font-semibold theme-text-secondary mb-2">Subject</label>
                   <input
                     type="text"
+                    name="subject"
                     required
                     placeholder="How can we help?"
                     className="w-full theme-input rounded-xl px-4 py-3"
@@ -450,6 +494,7 @@ export default function Home() {
                 <div>
                   <label className="block text-sm font-semibold theme-text-secondary mb-2">Message</label>
                   <textarea
+                    name="message"
                     rows={4}
                     required
                     placeholder="Write your message here..."
@@ -458,9 +503,18 @@ export default function Home() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-bold py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:scale-[1.02]"
+                  disabled={formStatus.loading}
+                  className={`w-full py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-lg ${
+                    formStatus.loading
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-blue-600/25 hover:shadow-blue-600/40 hover:scale-[1.02]'
+                  }`}
                 >
-                  Send Message <ChevronRight className="w-4 h-4" />
+                  {formStatus.loading ? (
+                    <><div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> Sending...</>
+                  ) : (
+                    <><Send className="w-4 h-4" /> Send Message</>
+                  )}
                 </button>
               </form>
             </div>
