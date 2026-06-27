@@ -109,6 +109,18 @@ export default function Home() {
               </a>
             </div>
 
+            {/* Desktop CTA Buttons */}
+            <div className="hidden md:flex items-center gap-4">
+              <Link to="/login" className="theme-text-secondary hover:text-blue-600 font-semibold transition-colors">
+                Sign In
+              </Link>
+              <Link
+                to="/register"
+                className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-6 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:scale-105 flex items-center gap-2"
+              >
+                Get Started <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -129,6 +141,14 @@ export default function Home() {
               <a href="#features" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-blue-600 font-semibold py-2 transition-colors">Features</a>
               <a href="#contact" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-blue-600 font-semibold py-2 transition-colors">Contact</a>
               <hr className="theme-separator my-2" />
+              <Link to="/login" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-blue-600 font-semibold py-2 transition-colors text-center">Sign In</Link>
+              <Link
+                to="/register"
+                onClick={() => setMenuOpen(false)}
+                className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-xl font-bold text-center"
+              >
+                Get Started Free
+              </Link>
             </div>
           </div>
         )}
@@ -276,6 +296,12 @@ export default function Home() {
                   <p className="theme-text-muted mb-6 max-w-sm mx-auto">
                     Be part of the most active campus sports community. Register now and start your journey.
                   </p>
+                  <Link
+                    to="/register"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-xl font-bold hover:shadow-lg hover:shadow-blue-600/25 transition-all duration-300 hover:scale-105"
+                  >
+                    Get Started <ChevronRight className="w-4 h-4" />
+                  </Link>
                 </div>
               </div>
               {/* Decorative Elements */}
