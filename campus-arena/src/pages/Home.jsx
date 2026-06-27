@@ -109,18 +109,6 @@ export default function Home() {
               </a>
             </div>
 
-            {/* Desktop CTA Buttons */}
-            <div className="hidden md:flex items-center gap-4">
-              <Link to="/login" className="theme-text-secondary hover:text-blue-600 font-semibold transition-colors">
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-6 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:scale-105 flex items-center gap-2"
-              >
-                Get Started <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -141,14 +129,6 @@ export default function Home() {
               <a href="#features" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-blue-600 font-semibold py-2 transition-colors">Features</a>
               <a href="#contact" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-blue-600 font-semibold py-2 transition-colors">Contact</a>
               <hr className="theme-separator my-2" />
-              <Link to="/login" onClick={() => setMenuOpen(false)} className="theme-text-secondary hover:text-blue-600 font-semibold py-2 transition-colors text-center">Sign In</Link>
-              <Link
-                to="/register"
-                onClick={() => setMenuOpen(false)}
-                className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-xl font-bold text-center"
-              >
-                Get Started Free
-              </Link>
             </div>
           </div>
         )}
@@ -179,22 +159,6 @@ export default function Home() {
             track scores, and compete with students across your campus.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <Link
-              to="/register"
-              className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-xl shadow-blue-600/25 hover:shadow-blue-600/40 hover:scale-105 flex items-center justify-center gap-2"
-            >
-              <Zap className="w-5 h-5" />
-              Get Started Free
-            </Link>
-            <Link
-              to="/login"
-              className="border-2 border-blue-600/30 hover:border-blue-600 text-blue-600 dark:text-blue-400 px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-600/10 transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              Sign In
-            </Link>
-          </div>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
@@ -312,12 +276,6 @@ export default function Home() {
                   <p className="theme-text-muted mb-6 max-w-sm mx-auto">
                     Be part of the most active campus sports community. Register now and start your journey.
                   </p>
-                  <Link
-                    to="/register"
-                    className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-xl font-bold hover:shadow-lg hover:shadow-blue-600/25 transition-all duration-300 hover:scale-105"
-                  >
-                    Get Started <ChevronRight className="w-4 h-4" />
-                  </Link>
                 </div>
               </div>
               {/* Decorative Elements */}
@@ -358,42 +316,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== CTA SECTION ===== */}
-      <section className="px-4 sm:px-6 py-24">
-        <div className="max-w-5xl mx-auto">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-600 p-12 sm:p-16 text-center">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-3xl" />
-              <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl" />
-            </div>
-            
-            <div className="relative z-10">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
-                Ready to Start Playing?
-              </h2>
-              <p className="text-white/90 text-lg max-w-2xl mx-auto mb-8">
-                Join thousands of students who are already competing, winning, and having fun on Campus Arena.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  to="/register"
-                  className="bg-white text-blue-700 px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
-                >
-                  <Zap className="w-5 h-5" />
-                  Get Started Free
-                </Link>
-                <Link
-                  to="/login"
-                  className="border-2 border-white/30 hover:border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 transition-all duration-300"
-                >
-                  Sign In
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ===== CONTACT SECTION ===== */}
       <section id="contact" className="px-4 sm:px-6 py-24 max-w-7xl mx-auto">
@@ -419,8 +341,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="font-semibold theme-text-primary">Email</p>
-                    <p className="theme-text-muted text-sm">support@campusarena.com</p>
-                    <p className="theme-text-muted text-sm">events@campusarena.com</p>
+                    <p className="theme-text-muted text-sm">campusevents2026@gmail.com</p>
                   </div>
                 </div>
 
@@ -441,7 +362,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="font-semibold theme-text-primary">Phone</p>
-                    <p className="theme-text-muted text-sm">+91 7099468315</p>
+                    <p className="theme-text-muted text-sm">+91 6001278436</p>
                     <p className="theme-text-muted text-sm">Mon-Fri, 9 AM - 5 PM</p>
                   </div>
                 </div>
